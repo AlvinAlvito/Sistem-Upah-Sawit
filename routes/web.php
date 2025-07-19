@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FuzzyfikasiController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
@@ -53,7 +54,8 @@ Route::delete('/admin/data-pemasukan/{id}', [PemasukanController::class, 'destro
 
 
 // Fuzzifikasi
-Route::view('/admin/fuzzifikasi', 'admin.fuzzifikasi')->name('fuzzifikasi');
+Route::get('/admin/fuzzifikasi', [FuzzyfikasiController::class, 'index'])->name('fuzzifikasi');
+
 
 // Riwayat Gaji & Bonus
 Route::get('/admin/gaji-bonus', [RiwayatKerjaController::class, 'index'])->name('riwayat.index');

@@ -16,7 +16,9 @@ return new class extends Migration {
             $table->enum('sektor', ['Sektor Timur', 'Sektor Selatan', 'Sektor Utara', 'Sektor Barat']);
             $table->date('tanggal');
             $table->integer('jumlah_buah');
-            $table->enum('cuaca', ['Hujan', 'Cerah', 'Panas Terik']);
+            $table->integer('jarak_lokasi');
+            $table->unsignedTinyInteger('cuaca'); // 0-15
+            $table->unsignedTinyInteger('kondisi_jalan'); // 0-15
             $table->timestamps();
         });
 

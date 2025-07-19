@@ -23,12 +23,18 @@ class PemasukanController extends Controller
             'sektor' => 'required|string|max:100',
             'tanggal' => 'required|date',
             'jumlah_buah' => 'required|numeric|min:1',
-            'cuaca' => 'required|string|max:100'
+            'jarak_lokasi' => 'required|numeric|min:0|max:5',
+            'cuaca' => 'required|numeric|min:0|max:20',
+            'kondisi_jalan' => 'required|numeric|min:0|max:20'
         ]);
 
-        Pemasukan::create($validated);
-        return redirect()->back()->with('success', 'Data pemasukan berhasil ditambahkan!');
+        $pemasukan = Pemasukan::create($validated);
+        $pemasukan->prosesFuzzifikasi();
+
+        return redirect()->back()->with('success', 'Data pemasukan berhasil ditambahkan dan difuzzifikasi!');
     }
+
+
 
     public function destroy($id)
     {
