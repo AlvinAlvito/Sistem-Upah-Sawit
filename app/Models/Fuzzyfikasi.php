@@ -13,6 +13,7 @@ class Fuzzyfikasi extends Model
 
     protected $fillable = [
         'pegawai_id',
+        'pemasukan_id', // ← tambahkan ini
         'jumlah_rendah',
         'jumlah_sedang',
         'jumlah_banyak',
@@ -26,6 +27,7 @@ class Fuzzyfikasi extends Model
         'jalan_sedang',
         'jalan_buruk',
     ];
+
 
     public function pegawai()
     {

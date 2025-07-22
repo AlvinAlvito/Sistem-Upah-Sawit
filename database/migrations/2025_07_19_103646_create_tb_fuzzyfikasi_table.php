@@ -10,7 +10,12 @@ class CreateTbFuzzyfikasiTable extends Migration
     {
         Schema::create('tb_fuzzyfikasi', function (Blueprint $table) {
             $table->id();
+
+            // Foreign key ke tabel pegawais
             $table->foreignId('pegawai_id')->constrained('pegawais')->onDelete('cascade');
+
+            // Foreign key ke tabel pemasukans
+            $table->foreignId('pemasukan_id')->constrained('pemasukans')->onDelete('cascade');
 
             // Jumlah buah
             $table->float('jumlah_rendah')->default(0);

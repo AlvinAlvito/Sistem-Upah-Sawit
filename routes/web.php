@@ -7,6 +7,7 @@ use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PemasukanController;
 use App\Http\Controllers\FuzzyfikasiController;
 use App\Http\Controllers\RiwayatKerjaController;
+use App\Http\Controllers\GajiController;
 
 // ===================
 // Halaman Login
@@ -97,15 +98,5 @@ Route::get('/admin/fuzzifikasi', function () {
 // ===================
 Route::get('/admin/gaji-bonus', function () {
     if (!session('is_admin')) return redirect('/');
-    return app(RiwayatKerjaController::class)->index();
-})->name('riwayat.index');
-
-Route::get('/admin/gaji-bonus/create', function () {
-    if (!session('is_admin')) return redirect('/');
-    return app(RiwayatKerjaController::class)->create();
-})->name('riwayat.create');
-
-Route::post('/admin/gaji-bonus', function (Request $request) {
-    if (!session('is_admin')) return redirect('/');
-    return app(RiwayatKerjaController::class)->store($request);
-})->name('riwayat.store');
+    return app(GajiController::class)->index();
+})->name('admin.gaji');
