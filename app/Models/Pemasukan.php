@@ -43,18 +43,10 @@ class Pemasukan extends Model
 
         // --- Konfigurasi Batas ---
         $batas = [
-            'jumlah_buah' => [100, 300, 500],       
-            'jarak' => [1, 3, 5],                  
-            'cuaca' => [                          
-                'hujan' => [0, 5, 10],
-                'mendung' => [5, 10, 15],
-                'cerah' => [10, 15, 20]
-            ],
-            'jalan' => [                           
-                'buruk' => [0, 5, 10],
-                'sedang' => [5, 10, 15],
-                'baik' => [10, 15, 20]
-            ]
+            'jumlah_buah' => [100, 300, 500],        // rendah, sedang, tinggi
+            'jarak' => [2, 3, 4],                    // dekat, sedang, jauh
+            'cuaca' => [15, 10, 5],                  // hujan, mendung, cerah (pakai angka representasi)
+            'jalan' => [5, 10, 15],                  // buruk, sedang, baik (pakai angka representasi)
         ];
 
         // --- FUZZIFIKASI JUMLAH BUAH ---
@@ -72,25 +64,22 @@ class Pemasukan extends Model
         $fuzzy->jarak_jauh = ($x <= $med) ? 0 : (($x <= $high) ? ($x - $med) / ($high - $med) : 1);
 
         // --- FUZZIFIKASI CUACA ---
-        $x = $this->cuaca;
-        [$a, $b, $c] = $batas['cuaca']['hujan'];
-        $fuzzy->cuaca_hujan = ($x <= $a) ? 1 : (($x <= $b) ? ($b - $x) / ($b - $a) : 0);
-        [$a, $b, $c] = $batas['cuaca']['mendung'];
-        $fuzzy->cuaca_mendung = ($x <= $a || $x >= $c) ? 0 : (($x <= $b) ? ($x - $a) / ($b - $a) : ($c - $x) / ($c - $b));
-        [$a, $b, $c] = $batas['cuaca']['cerah'];
-        $fuzzy->cuaca_cerah = ($x <= $b) ? 0 : (($x <= $c) ? ($x - $b) / ($c - $b) : 1);
+        $x = (float) $this->cuaca; // pastikan cuaca disimpan sebagai angka
+        [$low, $med, $high] = $batas['cuaca'];
+        $fuzzy->cuaca_hujan = ($x <= $low) ? 1 : (($x <= $med) ? ($med - $x) / ($med - $low) : 0);
+        $fuzzy->cuaca_mendung = ($x <= $low || $x >= $high) ? 0 : (($x <= $med) ? ($x - $low) / ($med - $low) : ($high - $x) / ($high - $med));
+        $fuzzy->cuaca_cerah = ($x <= $med) ? 0 : (($x <= $high) ? ($x - $med) / ($high - $med) : 1);
 
-        // --- FUZZIFIKASI JALAN ---
-        $x = $this->kondisi_jalan;
-        [$a, $b, $c] = $batas['jalan']['buruk'];
-        $fuzzy->jalan_buruk = ($x <= $a) ? 1 : (($x <= $b) ? ($b - $x) / ($b - $a) : 0);
-        [$a, $b, $c] = $batas['jalan']['sedang'];
-        $fuzzy->jalan_sedang = ($x <= $a || $x >= $c) ? 0 : (($x <= $b) ? ($x - $a) / ($b - $a) : ($c - $x) / ($c - $b));
-        [$a, $b, $c] = $batas['jalan']['baik'];
-        $fuzzy->jalan_baikk = ($x <= $b) ? 0 : (($x <= $c) ? ($x - $b) / ($c - $b) : 1);
+        // --- FUZZIFIKASI KONDISI JALAN ---
+        $x = (float) $this->kondisi_jalan; // pastikan kondisi_jalan disimpan sebagai angka
+        [$low, $med, $high] = $batas['jalan'];
+        $fuzzy->jalan_buruk = ($x <= $low) ? 1 : (($x <= $med) ? ($med - $x) / ($med - $low) : 0);
+        $fuzzy->jalan_sedang = ($x <= $low || $x >= $high) ? 0 : (($x <= $med) ? ($x - $low) / ($med - $low) : ($high - $x) / ($high - $med));
+        $fuzzy->jalan_baikk = ($x <= $med) ? 0 : (($x <= $high) ? ($x - $med) / ($high - $med) : 1);
 
         $fuzzy->save();
     }
+
 
 
 

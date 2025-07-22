@@ -1,63 +1,111 @@
 <?php
 
-use App\Http\Controllers\FuzzyfikasiController;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use App\Models\Pegawai;
 use App\Http\Controllers\PegawaiController;
 use App\Http\Controllers\PemasukanController;
+use App\Http\Controllers\FuzzyfikasiController;
 use App\Http\Controllers\RiwayatKerjaController;
 
-// =============================
-// AUTH ROUTES
-// =============================
+// ===================
+// Halaman Login
+// ===================
+Route::get('/', function () {
+    return view('login');
+})->name('login');
 
-// Login page
-Route::view('/', 'login')->name('login');
-
-// Proses login
+// ===================
+// Proses Login Manual
+// ===================
 Route::post('/', function (Request $request) {
-    $credentials = $request->only('username', 'password');
+    $username = $request->username;
+    $password = $request->password;
 
-    if (Auth::attempt($credentials)) {
-        $request->session()->regenerate();
-        return redirect()->route('pegawai.index');
+    if ($username === 'admin' && $password === '123') {
+        session(['is_admin' => true]);
+        return redirect('/admin');
     }
 
-    return back()->with('error', 'Username atau password salah.');
+    return back()->withErrors(['login' => 'Username atau Password salah!']);
 })->name('login.proses');
 
+// ===================
 // Logout
+// ===================
 Route::get('/logout', function () {
-    Auth::logout();
-    return redirect()->route('login');
+    session()->forget('is_admin');
+    return redirect('/');
 })->name('logout');
 
+// ===================
+// Dashboard Admin
+// ===================
+Route::get('/admin', function () {
+    if (!session('is_admin')) {
+        return redirect('/');
+    }
+    return view('admin.index');
+})->name('dashboard');
 
-// =============================
-// ADMIN ROUTES (Proteksi auth)
-// =============================
+// ===================
+// CRUD Pegawai
+// ===================
+Route::get('/admin/data-pegawai', function () {
+    if (!session('is_admin')) return redirect('/');
+    return app(PegawaiController::class)->index();
+})->name('pegawai.index');
 
+Route::post('/admin/data-pegawai', function (Request $request) {
+    if (!session('is_admin')) return redirect('/');
+    return app(PegawaiController::class)->store($request);
+})->name('pegawai.store');
 
-Route::view('/admin', 'admin.index')->name('dashboard');
+Route::delete('/admin/data-pegawai/{id}', function ($id) {
+    if (!session('is_admin')) return redirect('/');
+    return app(PegawaiController::class)->destroy($id);
+})->name('pegawai.destroy');
 
-// Pegawai
-Route::get('/admin/data-pegawai', [PegawaiController::class, 'index'])->name('pegawai.index');
-Route::post('/admin/data-pegawai', [PegawaiController::class, 'store'])->name('pegawai.store');
-Route::delete('/admin/data-pegawai/{id}', [PegawaiController::class, 'destroy'])->name('pegawai.destroy');
+// ===================
+// CRUD Pemasukan
+// ===================
+Route::get('/admin/data-pemasukan', function () {
+    if (!session('is_admin')) return redirect('/');
+    return app(PemasukanController::class)->index();
+})->name('pemasukan.index');
 
+Route::post('/admin/data-pemasukan', function (Request $request) {
+    if (!session('is_admin')) return redirect('/');
+    return app(PemasukanController::class)->store($request);
+})->name('pemasukan.store');
 
-// Pemasukan
-Route::get('/admin/data-pemasukan', [PemasukanController::class, 'index'])->name('pemasukan.index');
-Route::post('/admin/data-pemasukan', [PemasukanController::class, 'store'])->name('pemasukan.store');
-Route::delete('/admin/data-pemasukan/{id}', [PemasukanController::class, 'destroy'])->name('pemasukan.destroy');
+Route::delete('/admin/data-pemasukan/{id}', function ($id) {
+    if (!session('is_admin')) return redirect('/');
+    return app(PemasukanController::class)->destroy($id);
+})->name('pemasukan.destroy');
 
-
+// ===================
 // Fuzzifikasi
-Route::get('/admin/fuzzifikasi', [FuzzyfikasiController::class, 'index'])->name('fuzzifikasi');
+// ===================
+Route::get('/admin/fuzzifikasi', function () {
+    if (!session('is_admin')) return redirect('/');
+    return app(FuzzyfikasiController::class)->index();
+})->name('fuzzifikasi');
 
-
+// ===================
 // Riwayat Gaji & Bonus
-Route::get('/admin/gaji-bonus', [RiwayatKerjaController::class, 'index'])->name('riwayat.index');
-Route::get('/admin/gaji-bonus/create', [RiwayatKerjaController::class, 'create'])->name('riwayat.create');
-Route::post('/admin/gaji-bonus', [RiwayatKerjaController::class, 'store'])->name('riwayat.store');
+// ===================
+Route::get('/admin/gaji-bonus', function () {
+    if (!session('is_admin')) return redirect('/');
+    return app(RiwayatKerjaController::class)->index();
+})->name('riwayat.index');
+
+Route::get('/admin/gaji-bonus/create', function () {
+    if (!session('is_admin')) return redirect('/');
+    return app(RiwayatKerjaController::class)->create();
+})->name('riwayat.create');
+
+Route::post('/admin/gaji-bonus', function (Request $request) {
+    if (!session('is_admin')) return redirect('/');
+    return app(RiwayatKerjaController::class)->store($request);
+})->name('riwayat.store');
