@@ -48,7 +48,7 @@ class Pemasukan extends Model
         $batas = [
             'jumlah_buah' => [100, 300, 500],  // rendah, sedang, tinggi
             'jarak' => [2, 3, 4],              // dekat, sedang, jauh
-            'cuaca' => [15, 10, 5],            // hujan, mendung, cerah
+            'cuaca' => [5, 10, 15],            // hujan, mendung, cerah
             'jalan' => [5, 10, 15],            // buruk, sedang, baik
         ];
 
@@ -104,15 +104,24 @@ class Pemasukan extends Model
 
         $numerator = 0;
         $denominator = 0;
-        foreach ($rules as $rule) {
-            $numerator += $rule['nilai'] * $rule['z'];
-            $denominator += $rule['nilai'];
+
+        // Logging rule satu per satu
+        foreach ($rules as $index => $rule) {
+            logger("Rule " . ($index + 1) . ": nilai = " . $rule['nilai'] . ", z = " . $rule['z']);
+
+            if ($rule['nilai'] > 0) {
+                $numerator += $rule['nilai'] * $rule['z'];
+                $denominator += $rule['nilai'];
+            }
         }
 
-        $z_final = $denominator == 0 ? 0 : $numerator / $denominator;
-        $presentase = round(($z_final / 300) * 100, 2); // Jika skala z max adalah 300
+        // Jika semua nilai alpha = 0, maka gunakan Zmin = 100
+        $z_final = $denominator == 0 ? 100 : $numerator / $denominator;
 
-        // Simpan ke hasil_fuzzies
+        // Hitung persentase bonus dari skala maksimal 300
+        $presentase = round(($z_final / 300) * 100, 2); // skala z maksimal = 300
+
+        // Simpan hasil fuzzy
         $hasil = new HasilFuzzy();
         $hasil->pemasukan_id = $this->id;
         $hasil->pegawai_id = $this->pegawai_id;
@@ -120,16 +129,23 @@ class Pemasukan extends Model
         $hasil->persentase = $presentase;
         $hasil->save();
 
-        // Simpan ke riwayat kerja (gaji pokok 300 * tandan, bonus dari persen, total)
+        // Hitung gaji pokok (misalnya 1 buah = 300)
         $gaji_pokok = $this->jumlah_buah * 300;
-        $bonus = round($presentase / 100 * 1000);
+
+        // Hitung bonus berdasarkan persentase dari gaji pokok
+        $bonus = round(($presentase / 100) * $gaji_pokok);
+
+        // Total upah
         $total = $gaji_pokok + $bonus;
-        logger("JUMLAH TANDAN: " . $this->jumlah_buah);
+
+        // Logging hasil akhir
+        logger("JUMLAH BUAH: " . $this->jumlah_buah);
         logger("GAJI POKOK: " . $gaji_pokok);
         logger("PRESENTASE: " . $presentase);
         logger("BONUS: " . $bonus);
         logger("TOTAL: " . $total);
 
+        // Simpan ke riwayat kerja
         \App\Models\RiwayatKerja::create([
             'pegawai_id' => $this->pegawai_id,
             'gaji_pokok' => $gaji_pokok,

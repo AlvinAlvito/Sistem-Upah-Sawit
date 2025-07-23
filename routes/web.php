@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ChartController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
@@ -100,3 +101,10 @@ Route::get('/admin/gaji-bonus', function () {
     if (!session('is_admin')) return redirect('/');
     return app(GajiController::class)->index();
 })->name('admin.gaji');
+
+
+
+Route::get('/chart/sektor', [ChartController::class, 'buahPerSektor']);
+Route::get('/chart/pegawai', [ChartController::class, 'buahPerPegawai']);
+Route::get('/chart/cuaca', [ChartController::class, 'buahPerCuaca']);
+Route::get('/chart/pendapatan-tertinggi', [ChartController::class, 'pendapatanTertinggi']);
