@@ -1,7 +1,7 @@
 <nav>
     <div class="logo-name">
         <div class="logo-image">
-            <img src="https://i.pinimg.com/736x/a9/7a/f8/a97af80dbad5a6e64b7811afc8f18fae.jpg"  alt="">
+            <img src="images/logo.jpg"  alt="">
         </div>
 
         <span class="logo_name">Sawit Zuheri</span>
@@ -43,7 +43,7 @@
         
 
         <ul class="logout-mode">
-            <li><a href="#">
+            <li><a href="/">
                     <i class="uil uil-signout"></i>
                     <span class="link-name">Logout</span>
                 </a></li>

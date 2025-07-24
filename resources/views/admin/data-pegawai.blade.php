@@ -9,7 +9,7 @@
             <input type="text" placeholder="Search here...">
         </div>
         
-        <img src="/images/profile.jpg" alt="">
+        <img src="/images/profil.png" alt="">
     </div>
     <div class="dash-content">
         <div class="activity">
@@ -28,7 +28,7 @@
                 </div>
             </div>
 
-            <table class="table table-hover table-striped">
+            <table id="datatable" class="table table-hover table-striped">
                 <thead>
                     <tr>
                         <th scope="col">No</th>
@@ -46,10 +46,8 @@
                             <td>{{ $pegawai->umur }}</td>
                             <td>{{ $pegawai->alamat }}</td>
                             <td>
-                                {{-- Tombol edit (opsional) --}}
                                 <a class="text-primary" data-bs-toggle="modal" data-bs-target="#modalEditPegawai{{ $pegawai->id }}"><i class="uil uil-edit"></i></a>
 
-                                {{-- Tombol delete --}}
                                 <form action="{{ route('pegawai.destroy', $pegawai->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Yakin ingin menghapus pegawai ini?')">
                                     @csrf
                                     @method('DELETE')
@@ -133,4 +131,28 @@
         </div>
     </div>
 </div>
+
+    <!-- DataTables CDN -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable({
+                language: {
+                    search: "Cari:",
+                    lengthMenu: "Tampilkan _MENU_ data",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    paginate: {
+                        first: "Awal",
+                        last: "Akhir",
+                        next: "Berikutnya",
+                        previous: "Sebelumnya"
+                    },
+                    zeroRecords: "Data tidak ditemukan",
+                }
+            });
+        });
+    </script>
 @endsection

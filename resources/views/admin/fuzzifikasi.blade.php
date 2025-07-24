@@ -9,7 +9,7 @@
                 <input type="text" placeholder="Search here...">
             </div>
 
-            <img src="/images/profile.jpg" alt="">
+            <img src="/images/profil.png" alt="">
         </div>
         <div class="dash-content">
             <div class="activity">

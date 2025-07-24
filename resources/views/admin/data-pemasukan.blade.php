@@ -9,7 +9,7 @@
                 <input type="text" placeholder="Search here...">
             </div>
 
-            <img src="/images/profile.jpg" alt="">
+            <img src="/images/profil.png" alt="">
         </div>
         <div class="dash-content">
             <div class="activity">
@@ -24,12 +24,11 @@
 
                 <div class="row justify-content-end mb-3">
                     <div class="col-lg-3 col-md-4 col-sm-6 text-end">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPemasukan"><i
-                                class="uil uil-plus"></i> Tambah Data</button>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalTambahPemasukan"><i class="uil uil-plus"></i> Tambah Data</button>
                     </div>
                 </div>
 
-                <table class="table table-hover table-striped">
+                <table id="datatable" class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -55,31 +54,26 @@
                                 <td>{{ $item->tampilkanCuaca() }}</td>
                                 <td>{{ $item->tampilkanKondisiJalan() }}</td>
                                 <td>
-                                    <form action="{{ route('pemasukan.destroy', $item->id) }}" method="POST"
-                                        style="display:inline-block"
-                                        onsubmit="return confirm('Yakin ingin menghapus data ini?')">
+                                    <form action="{{ route('pemasukan.destroy', $item->id) }}" method="POST" style="display:inline-block" onsubmit="return confirm('Yakin ingin menghapus data ini?')">
                                         @csrf
                                         @method('DELETE')
-                                        <button type="submit" class="btn btn-link text-danger p-0 m-0"><i
-                                                class="uil uil-trash-alt"></i></button>
+                                        <button type="submit" class="btn btn-link text-danger p-0 m-0"><i class="uil uil-trash-alt"></i></button>
                                     </form>
                                 </td>
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="8" class="text-center">Belum ada data pemasukan.</td>
+                                <td colspan="9" class="text-center">Belum ada data pemasukan.</td>
                             </tr>
                         @endforelse
                     </tbody>
                 </table>
-
             </div>
         </div>
     </section>
 
     <!-- Modal Tambah Pemasukan -->
-    <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" aria-labelledby="modalTambahPemasukanLabel"
-        aria-hidden="true">
+    <div class="modal fade" id="modalTambahPemasukan" tabindex="-1" aria-labelledby="modalTambahPemasukanLabel" aria-hidden="true">
         <div class="modal-dialog">
             <form action="{{ route('pemasukan.store') }}" method="POST">
                 @csrf
@@ -89,6 +83,8 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Tutup"></button>
                     </div>
                     <div class="modal-body">
+                        <!-- Form isian pemasukan -->
+                        <!-- (form content tetap sama seperti sebelumnya) -->
                         <div class="mb-3">
                             <label>Nama Pegawai</label>
                             <select name="pegawai_id" class="form-select" required>
@@ -98,7 +94,6 @@
                                 @endforeach
                             </select>
                         </div>
-
                         <div class="mb-3">
                             <label>Sektor</label>
                             <select name="sektor" class="form-select" required>
@@ -109,55 +104,35 @@
                                 <option value="Sektor Barat">Sektor Barat</option>
                             </select>
                         </div>
-
                         <div class="mb-3">
                             <label>Tanggal</label>
                             <input type="date" name="tanggal" class="form-control" required>
                         </div>
-
                         <div class="mb-3">
                             <label>Jumlah Buah (Kg)</label>
                             <input type="number" name="jumlah_buah" class="form-control" min="1" required>
                         </div>
-                        <!-- Jarak Lokasi -->
                         <div class="mb-3">
                             <label>Jarak Lokasi</label>
-                            <input type="range" name="jarak_lokasi" class="form-range" min="0" max="5"
-                                step="1" value="0" required>
+                            <input type="range" name="jarak_lokasi" class="form-range" min="0" max="5" step="1" value="0" required>
                             <div class="d-flex justify-content-between px-1 mt-1">
-                                <small>0 km</small>
-                                <small>1 km</small>
-                                <small>2 km</small>
-                                <small>3 km</small>
-                                <small>4 km</small>
-                                <small>5 km</small>
+                                <small>0 km</small><small>1 km</small><small>2 km</small><small>3 km</small><small>4 km</small><small>5 km</small>
                             </div>
                         </div>
-
-                        <!-- Cuaca -->
                         <div class="mb-3">
                             <label>Cuaca</label>
                             <div class="d-flex justify-content-between px-1 mb-1">
-                                <small>Hujan</small>
-                                <small>Mendung</small>
-                                <small>Cerah</small>
+                                <small>Hujan</small><small>Mendung</small><small>Cerah</small>
                             </div>
-                            <input type="range" name="cuaca" class="form-range" min="0" max="20"
-                                step="1" value="0" required>
+                            <input type="range" name="cuaca" class="form-range" min="0" max="20" step="1" value="0" required>
                         </div>
-
-                        <!-- Kondisi Jalan -->
                         <div class="mb-3">
                             <label>Kondisi Jalan</label>
                             <div class="d-flex justify-content-between px-1 mb-1">
-                                <small>Buruk</small>
-                                <small>Sedang</small>
-                                <small>Baik</small>
+                                <small>Buruk</small><small>Sedang</small><small>Baik</small>
                             </div>
-                            <input type="range" name="kondisi_jalan" class="form-range" min="0" max="20"
-                                step="1" value="0" required>
+                            <input type="range" name="kondisi_jalan" class="form-range" min="0" max="20" step="1" value="0" required>
                         </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="submit" class="btn btn-primary">Simpan</button>
@@ -167,4 +142,19 @@
             </form>
         </div>
     </div>
+
+
+
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
+    <!-- DataTables JS -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable();
+        });
+    </script>
+
 @endsection

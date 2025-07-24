@@ -9,7 +9,7 @@
                 <input type="text" placeholder="Search here...">
             </div>
 
-            <img src="/images/profile.jpg" alt="">
+            <img src="/images/profil.png" alt="">
         </div>
         <div class="dash-content">
             <div class="activity">
@@ -17,7 +17,7 @@
                     <i class="uil uil-tachometer-fast-alt"></i>
                     <span class="text">Gaji dan Bonus Pegawai</span>
                 </div>
-                <table class="table table-hover table-striped">
+                <table id="datatable" class="table table-hover table-striped">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -35,7 +35,6 @@
                                 <td>Rp {{ number_format($item->gaji_pokok, 0, ',', '.') }}</td>
                                 <td>Rp {{ number_format($item->bonus_nominal, 0, ',', '.') }}</td>
                                 <td>Rp {{ number_format($item->total_upah, 0, ',', '.') }}</td>
-
                             </tr>
                         @empty
                             <tr>
@@ -47,4 +46,30 @@
             </div>
         </div>
     </section>
+        <!-- DataTables CDN -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+
+    <script>
+        $(document).ready(function () {
+            $('#datatable').DataTable({
+                language: {
+                    search: "Cari:",
+                    lengthMenu: "Tampilkan _MENU_ data",
+                    info: "Menampilkan _START_ sampai _END_ dari _TOTAL_ data",
+                    paginate: {
+                        first: "Awal",
+                        last: "Akhir",
+                        next: "Berikutnya",
+                        previous: "Sebelumnya"
+                    },
+                    zeroRecords: "Data tidak ditemukan",
+                }
+            });
+        });
+    </script>
 @endsection
+
+
+
