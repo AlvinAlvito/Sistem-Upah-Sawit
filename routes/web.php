@@ -101,7 +101,7 @@ Route::get('/admin/gaji-bonus', function () {
     if (!session('is_admin')) return redirect('/');
     return app(GajiController::class)->index();
 })->name('admin.gaji');
-
+Route::get('/admin/gaji/download', [GajiController::class, 'downloadPDF'])->name('gaji.download');
 
 
 Route::get('/chart/sektor', [ChartController::class, 'buahPerSektor']);

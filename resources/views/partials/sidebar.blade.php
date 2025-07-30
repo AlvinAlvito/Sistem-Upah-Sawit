@@ -1,7 +1,7 @@
 <nav>
     <div class="logo-name">
         <div class="logo-image">
-            <img src="images/logo.jpg"  alt="">
+            <img src="/images/logo.jpg"  alt="">
         </div>
 
         <span class="logo_name">Sawit Zuheri</span>

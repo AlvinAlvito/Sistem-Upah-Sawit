@@ -84,22 +84,22 @@ class Pemasukan extends Model
 
         // === RULE BASE ===
         $rules = [
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_dekat, $fuzzy->cuaca_cerah, $fuzzy->jalan_baikk), 'z' => 90],
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_sedang, $fuzzy->cuaca_cerah, $fuzzy->jalan_sedang), 'z' => 85],
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_jauh, $fuzzy->cuaca_hujan, $fuzzy->jalan_buruk), 'z' => 40],
-            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_dekat, $fuzzy->cuaca_mendung, $fuzzy->jalan_baikk), 'z' => 70],
-            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_jauh, $fuzzy->cuaca_hujan, $fuzzy->jalan_buruk), 'z' => 30],
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_dekat, $fuzzy->cuaca_hujan, $fuzzy->jalan_sedang), 'z' => 50],
-            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_sedang, $fuzzy->cuaca_mendung, $fuzzy->jalan_baikk), 'z' => 45],
-            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_jauh, $fuzzy->cuaca_cerah, $fuzzy->jalan_baikk), 'z' => 75],
-            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_jauh, $fuzzy->cuaca_cerah, $fuzzy->jalan_baikk), 'z' => 55],
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_dekat, $fuzzy->cuaca_mendung, $fuzzy->jalan_baikk), 'z' => 80],
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_jauh, $fuzzy->cuaca_hujan, $fuzzy->jalan_buruk), 'z' => 35],
-            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_dekat, $fuzzy->cuaca_cerah, $fuzzy->jalan_buruk), 'z' => 60],
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_jauh, $fuzzy->cuaca_mendung, $fuzzy->jalan_buruk), 'z' => 45],
-            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_sedang, $fuzzy->cuaca_hujan, $fuzzy->jalan_buruk), 'z' => 50],
-            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_sedang, $fuzzy->cuaca_cerah, $fuzzy->jalan_sedang), 'z' => 65],
-            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_dekat, $fuzzy->cuaca_cerah, $fuzzy->jalan_baikk), 'z' => 78],
+            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_dekat, $fuzzy->cuaca_cerah, $fuzzy->jalan_baikk), 'z' => 30],  // Rule 1
+            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_sedang, $fuzzy->cuaca_cerah, $fuzzy->jalan_sedang), 'z' => 60], // Rule 2
+            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_jauh, $fuzzy->cuaca_hujan, $fuzzy->jalan_buruk), 'z' => 90],  // Rule 3
+            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_dekat, $fuzzy->cuaca_mendung, $fuzzy->jalan_baikk), 'z' => 30], // Rule 4
+            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_jauh, $fuzzy->cuaca_hujan, $fuzzy->jalan_buruk), 'z' => 90],  // Rule 5
+            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_dekat, $fuzzy->cuaca_hujan, $fuzzy->jalan_sedang), 'z' => 60], // Rule 6
+            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_sedang, $fuzzy->cuaca_mendung, $fuzzy->jalan_baikk), 'z' => 30], // Rule 7
+            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_jauh, $fuzzy->cuaca_cerah, $fuzzy->jalan_baikk), 'z' => 60],     // Rule 8
+            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_jauh, $fuzzy->cuaca_cerah, $fuzzy->jalan_baikk), 'z' => 30],     // Rule 9
+            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_dekat, $fuzzy->cuaca_mendung, $fuzzy->jalan_baikk), 'z' => 60],  // Rule 10
+            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_sedang, $fuzzy->cuaca_mendung, $fuzzy->jalan_sedang), 'z' => 60], // Rule 11
+            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_dekat, $fuzzy->cuaca_cerah, $fuzzy->jalan_buruk), 'z' => 60],   // Rule 12
+            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_jauh, $fuzzy->cuaca_mendung, $fuzzy->jalan_buruk), 'z' => 90],  // Rule 13
+            ['nilai' => min($fuzzy->jumlah_banyak, $fuzzy->jarak_sedang, $fuzzy->cuaca_hujan, $fuzzy->jalan_buruk), 'z' => 90],  // Rule 14
+            ['nilai' => min($fuzzy->jumlah_rendah, $fuzzy->jarak_dekat, $fuzzy->cuaca_hujan, $fuzzy->jalan_sedang), 'z' => 60],  // Rule 15
+            ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_dekat, $fuzzy->cuaca_hujan, $fuzzy->jalan_baikk), 'z' => 30],    // Rule 16
         ];
 
         $numerator = 0;
