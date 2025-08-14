@@ -1,33 +1,58 @@
 <?php
+
+namespace App\Http\Controllers;
+
 use App\Models\Pemasukan;
-use App\Models\Pegawai;
 use Illuminate\Support\Facades\DB;
 
 class AdminController extends Controller
 {
-
-
     public function index()
     {
-        // Jumlah buah berdasarkan sektor
-        $buahPerSektor = Pemasukan::select('sektor', DB::raw('SUM(jumlah_buah) as total'))
+        return view('admin.index');
+    }
+
+    public function buahPerSektor()
+    {
+        $data = Pemasukan::select('sektor', DB::raw('SUM(jumlah_buah) as total'))
             ->groupBy('sektor')
-            ->pluck('total', 'sektor');
+            ->get();
 
-        // Jumlah buah berdasarkan pegawai
-        $buahPerPegawai = Pemasukan::with('pegawai')
-            ->select('pegawai_id', DB::raw('SUM(jumlah_buah) as total'))
-            ->groupBy('pegawai_id')
-            ->get()
-            ->pluck('total', fn($item) => $item->pegawai->nama ?? 'Tidak diketahui');
+        return response()->json([
+            'labels' => $data->pluck('sektor'),
+            'data' => $data->pluck('total'),
+        ]);
+    }
 
-        // Jumlah buah berdasarkan cuaca
-        $buahPerCuaca = Pemasukan::select('cuaca', DB::raw('SUM(jumlah_buah) as total'))
+    public function buahPerPegawai()
+    {
+        $data = DB::table('pemasukans')
+            ->join('pegawais', 'pemasukans.pegawai_id', '=', 'pegawais.id')
+            ->select('pegawais.nama', DB::raw('SUM(pemasukans.jumlah_buah) as total'))
+            ->groupBy('pegawais.nama')
+            ->get();
+
+        return response()->json([
+            'labels' => $data->pluck('nama'),
+            'data' => $data->pluck('total'),
+        ]);
+    }
+
+    public function buahPerCuaca()
+    {
+        $data = Pemasukan::select('cuaca', DB::raw('SUM(jumlah_buah) as total'))
             ->groupBy('cuaca')
-            ->pluck('total', 'cuaca');
+            ->get();
 
-        // Total pendapatan 5 pegawai tertinggi
-        $topPendapatan = DB::table('riwayat_kerjas')
+        return response()->json([
+            'labels' => $data->pluck('cuaca'),
+            'data' => $data->pluck('total'),
+        ]);
+    }
+
+    public function pendapatanTertinggi()
+    {
+        $data = DB::table('riwayat_kerjas')
             ->join('pegawais', 'riwayat_kerjas.pegawai_id', '=', 'pegawais.id')
             ->select('pegawais.nama', DB::raw('SUM(riwayat_kerjas.total_upah) as total'))
             ->groupBy('riwayat_kerjas.pegawai_id', 'pegawais.nama')
@@ -35,11 +60,9 @@ class AdminController extends Controller
             ->limit(5)
             ->get();
 
-        return view('admin.index', compact(
-            'buahPerSektor',
-            'buahPerPegawai',
-            'buahPerCuaca',
-            'topPendapatan'
-        ));
+        return response()->json([
+            'labels' => $data->pluck('nama'),
+            'data' => $data->pluck('total'),
+        ]);
     }
 }

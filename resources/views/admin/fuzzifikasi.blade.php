@@ -38,13 +38,13 @@
                                     <th class="text-center border">Sedang</th>
                                     <th class="text-center border">Jauh</th>
 
-                                    <th class="text-center border">Hujan</th>
-                                    <th class="text-center border">Mendung</th>
                                     <th class="text-center border">Cerah</th>
+                                    <th class="text-center border">Gerimis</th>
+                                    <th class="text-center border">Hujan</th>
 
-                                    <th class="text-center border">Buruk</th>
-                                    <th class="text-center border">Sedang</th>
                                     <th class="text-center border">Baik</th>
+                                    <th class="text-center border">Sedang</th>
+                                    <th class="text-center border">Buruk</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -66,14 +66,14 @@
                                         <td class="text-center border">{{ round($data->jarak_jauh, 2) }}</td>
 
                                         {{-- Cuaca --}}
-                                        <td class="text-center border">{{ round($data->cuaca_hujan, 2) }}</td>
-                                        <td class="text-center border">{{ round($data->cuaca_mendung, 2) }}</td>
                                         <td class="text-center border">{{ round($data->cuaca_cerah, 2) }}</td>
+                                        <td class="text-center border">{{ round($data->cuaca_mendung, 2) }}</td>
+                                        <td class="text-center border">{{ round($data->cuaca_hujan, 2) }}</td>
 
                                         {{-- Jalan --}}
-                                        <td class="text-center border">{{ round($data->jalan_buruk, 2) }}</td>
-                                        <td class="text-center border">{{ round($data->jalan_sedang, 2) }}</td>
                                         <td class="text-center border">{{ round($data->jalan_baikk, 2) }}</td>
+                                        <td class="text-center border">{{ round($data->jalan_sedang, 2) }}</td>
+                                        <td class="text-center border">{{ round($data->jalan_buruk, 2) }}</td>
                                     </tr>
                                 @endforeach
                             </tbody>

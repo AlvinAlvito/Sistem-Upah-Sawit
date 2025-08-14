@@ -15,7 +15,7 @@
             <div class="activity">
                 <div class="title">
                     <i class="uil uil-clipboard-notes"></i>
-                    <span class="text">Data Pemasukan Pegawai</span>
+                    <span class="text">Data Pemasukan Pemanen</span>
                 </div>
 
                 @if (session('success'))
@@ -122,14 +122,14 @@
                         <div class="mb-3">
                             <label>Cuaca</label>
                             <div class="d-flex justify-content-between px-1 mb-1">
-                                <small>Hujan</small><small>Mendung</small><small>Cerah</small>
+                                <small>Cerah</small><small>Gerimis</small><small>Hujan</small>
                             </div>
                             <input type="range" name="cuaca" class="form-range" min="0" max="20" step="1" value="0" required>
                         </div>
                         <div class="mb-3">
                             <label>Kondisi Jalan</label>
                             <div class="d-flex justify-content-between px-1 mb-1">
-                                <small>Buruk</small><small>Sedang</small><small>Baik</small>
+                                <small>Baik</small><small>Sedang</small><small>Buruk</small>
                             </div>
                             <input type="range" name="kondisi_jalan" class="form-range" min="0" max="20" step="1" value="0" required>
                         </div>

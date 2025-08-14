@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Api\ChartController;
+use App\Http\Controllers\AdminController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Http\Request;
 use App\Models\Pegawai;
@@ -104,7 +104,7 @@ Route::get('/admin/gaji-bonus', function () {
 Route::get('/admin/gaji/download', [GajiController::class, 'downloadPDF'])->name('gaji.download');
 
 
-Route::get('/chart/sektor', [ChartController::class, 'buahPerSektor']);
-Route::get('/chart/pegawai', [ChartController::class, 'buahPerPegawai']);
-Route::get('/chart/cuaca', [ChartController::class, 'buahPerCuaca']);
-Route::get('/chart/pendapatan-tertinggi', [ChartController::class, 'pendapatanTertinggi']);
+Route::get('/chart/sektor', [AdminController::class, 'buahPerSektor']);
+Route::get('/chart/pegawai', [AdminController::class, 'buahPerPegawai']);
+Route::get('/chart/cuaca', [AdminController::class, 'buahPerCuaca']);
+Route::get('/chart/pendapatan-tertinggi', [AdminController::class, 'pendapatanTertinggi']);

@@ -1,10 +1,10 @@
 <nav>
     <div class="logo-name">
         <div class="logo-image">
-            <img src="/images/logo.jpg"  alt="">
+            <img src="/images/logo.webp"  alt="">
         </div>
 
-        <span class="logo_name">Sawit Zuheri</span>
+        <span class="logo_name">PT.CSIL</span>
     </div>
 
     <div class="menu-items">
@@ -18,7 +18,7 @@
             <li >
                 <a href="/admin/data-pegawai" class="{{ Request::is('/admin/data-pegawai') ? 'active' : '' }}">
                     <i class="uil uil-files-landscapes"></i>
-                    <span class="link-name">Data Pegawai</span>
+                    <span class="link-name">Data Pemanen</span>
                 </a>
             </li>
              <li >

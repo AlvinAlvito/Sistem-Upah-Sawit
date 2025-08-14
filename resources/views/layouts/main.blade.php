@@ -22,7 +22,6 @@
 
         @yield('content')
     
-        @include('partials.footer')
 
     </section>
 

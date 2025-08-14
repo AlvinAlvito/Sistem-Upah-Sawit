@@ -15,7 +15,7 @@
         <div class="activity">
                 <div class="title">
                     <i class="uil uil-tachometer-fast-alt"></i>
-                    <span class="text">Fuzzifikasi</span>
+                    <span class="text">Gaji & Bonus</span>
                 </div>
                 <a href="{{ route('gaji.download') }}" class="btn btn-primary my-1">Download PDF</a>
             

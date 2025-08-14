@@ -15,7 +15,7 @@
         <div class="activity">
             <div class="title">
                 <i class="uil uil-users-alt"></i>
-                <span class="text">Data Pegawai</span>                
+                <span class="text">Data Pemanen</span>                
             </div>
 
             @if (session('success'))

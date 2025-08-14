@@ -8,7 +8,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PT SAWIT ZUHERI</title>
+    <title>PT.CSIL</title>
 
     <!-- CSS FILES -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -36,7 +36,7 @@
             <div class="container">
                 <a class="navbar-brand" href="index.html">
                     <i class="bi-back"></i>
-                    <span>PT SAWIT ZUHERI</span>
+                    <span>PT.CSIL</span>
                 </a>
 
                 <div class="d-lg-none ms-auto me-4">
@@ -48,33 +48,53 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
                 <!-- Modal -->
-                <div class="modal fade" id="loginModal" tabindex="-1" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <form method="POST" action="/" class="modal-content">
-                            @csrf
-                            <div class="modal-header">
-                                <h5 class="modal-title">Login Admin</h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                            </div>
-                            <div class="modal-body">
-                                @if ($errors->has('login'))
-                                    <div class="alert alert-danger">{{ $errors->first('login') }}</div>
-                                @endif
-                                <div class="mb-3">
-                                    <label>Username:</label>
-                                    <input type="text" name="username" class="form-control" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label>Password:</label>
-                                    <input type="password" name="password" class="form-control" required>
-                                </div>
-                            </div>
-                            <div class="modal-footer">
-                                <button class="btn btn-primary">Login</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
+               <!-- Modal Login Modern -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content shadow-lg rounded-4 border-0">
+      <form method="POST" action="/">
+        @csrf
+        <div class="modal-header bg-primary text-white rounded-top-4">
+          <h5 class="modal-title" id="loginModalLabel">Masuk Sistem PT.CSIL</h5>
+          <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body px-4 pt-4 pb-2">
+          @if ($errors->has('login'))
+            <div class="alert alert-danger">{{ $errors->first('login') }}</div>
+          @endif
+
+          <div class="mb-3">
+            <label for="username" class="form-label">Username</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+              <input type="text" name="username" id="username" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="password" class="form-label">Password</label>
+            <div class="input-group">
+              <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+              <input type="password" name="password" id="password" class="form-control" required>
+            </div>
+          </div>
+
+          <div class="form-check mb-3">
+            <input class="form-check-input" type="checkbox" value="" id="rememberMe">
+            <label class="form-check-label" for="rememberMe">
+              Ingat Saya
+            </label>
+          </div>
+        </div>
+        <div class="modal-footer justify-content-between px-4 pb-4">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-lg-5 me-lg-auto">
@@ -115,7 +135,7 @@
                     <div class="col-lg-10 col-12 mx-auto text-center">
                         <h1 class="text-white">Sistem Gaji & Bonus Otomatis Pegawai Sawit</h1>
 
-                        <h6 class="text-white mt-3">PT SAWIT ZUHERI - Efisiensi dalam Manajemen Tenaga Kerja Perkebunan
+                        <h6 class="text-white mt-3">PT.CSIL - Efisiensi dalam Manajemen Tenaga Kerja Perkebunan
                         </h6>
 
                         <a href="#" data-bs-toggle="modal" data-bs-target="#loginModal" class="btn btn-light btn-lg mt-4">Masuk Dashboard</a>

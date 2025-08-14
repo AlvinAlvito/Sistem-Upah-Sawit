@@ -22,17 +22,17 @@
                     <div class="box box1">
                         <i class="uil uil-thumbs-up"></i>
                         <span class="text">Total Pegawai</span>
-                        <span class="number">340</span>
+                        <span class="number">45</span>
                     </div>
                     <div class="box box2">
                         <i class="uil uil-comments"></i>
                         <span class="text">Total Mandor</span>
-                        <span class="number">43</span>
+                        <span class="number">3</span>
                     </div>
                     <div class="box box3">
                         <i class="uil uil-share"></i>
                         <span class="text">Total Sektor</span>
-                        <span class="number">16</span>
+                        <span class="number">4</span>
                     </div>
                 </div>
             </div>
