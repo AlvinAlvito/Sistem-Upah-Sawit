@@ -207,7 +207,6 @@ class Pemasukan extends Model
             ['nilai' => min($fuzzy->jumlah_sedang, $fuzzy->jarak_dekat, $fuzzy->cuaca_hujan, $fuzzy->jalan_baikk), 'z' => 100], // No 16
         ];
 
-
         // === DEFUZZIFIKASI METODE CENTROID ===
         $totalAtas = 0;
         $totalBawah = 0;
@@ -219,8 +218,25 @@ class Pemasukan extends Model
             }
         }
 
-        $z_final = $totalBawah > 0 ? $totalAtas / $totalBawah : 0;
-        $persentase = ($z_final / 300) * 100;
+        // Hitung Z final
+        if ($totalBawah > 0) {
+            $z_final = $totalAtas / $totalBawah;
+        } else {
+            // fallback jika tidak ada rule aktif
+            $z_final = 100;
+        }
+
+        // Bulatkan ke 3 level saja (100, 200, 300)
+        if ($z_final < 150) {
+            $z_final = 100;
+        } elseif ($z_final < 250) {
+            $z_final = 200;
+        } else {
+            $z_final = 300;
+        }
+
+        // Hitung persentase (33.33%, 66.66%, 99.99%)
+        $persentase = round(($z_final / 300) * 100, 2);
 
         // Simpan hasil fuzzy
         $hasil = new HasilFuzzy();
@@ -235,12 +251,19 @@ class Pemasukan extends Model
         $bonus = round(($persentase / 100) * $gaji_pokok);
         $total = $gaji_pokok + $bonus;
 
+        logger("JUMLAH BUAH: {$this->jumlah_buah}");
+        logger("GAJI POKOK: {$gaji_pokok}");
+        logger("PRESENTASE: {$persentase}");
+        logger("BONUS: {$bonus}");
+        logger("TOTAL: {$total}");
+
         \App\Models\RiwayatKerja::create([
             'pegawai_id' => $this->pegawai_id,
             'gaji_pokok' => $gaji_pokok,
             'bonus_nominal' => $bonus,
             'total_upah' => $total,
         ]);
+
 
     }
 
